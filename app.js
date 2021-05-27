@@ -48,6 +48,17 @@ const List = mongoose.model("List", listSchema);
 
 app.get("/", function(req, res) {
 
+  var today = new Date();
+
+  var options = {
+    weekday: "long" ,
+    day: "numeric" ,
+    month: "long"
+  };
+
+  var day = today.toLocaleDateString("en-US" , options);
+
+
   Item.find({}, function(err, foundItems){
 
     if (foundItems.length === 0) {
@@ -60,7 +71,7 @@ app.get("/", function(req, res) {
       });
       res.redirect("/");
     } else {
-      res.render("list", {listTitle: "Today", newListItems: foundItems});
+      res.render("list", {listTitle: day , newListItems: foundItems});
     }
   });
 
